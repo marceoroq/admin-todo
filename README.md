@@ -4,17 +4,21 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ### Steps to run the application in dev mode locally.
 
-First, create and run the database:
+1. Create and run the database with the following command:
 
 ```bash
 docker compose up -d
 ```
 
-Then, install project dependencies:
+2. Install project dependencies running:
 
 ```bash
 npm i
 ```
+
+3. Rename `.env.template` file to `.env`
+4. Add the corresponding values to the environment variables.
+5. Execute [SEED endpoint](localhost:3000/api/seed) to populate database with testing data.
 
 After that, run the project:
 
@@ -26,6 +30,19 @@ yarn dev
 pnpm dev
 # or
 bun dev
+```
+
+## Prisma Commands
+
+```bash
+# create initial configuration
+npx prisma init
+
+# perform a migration called 'dev'
+npx prisma migrate --name dev
+
+# create client to perform modifications in database
+npx prisma generate
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
