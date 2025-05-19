@@ -1,9 +1,33 @@
 import Link from "next/link";
 import Image from "next/image";
 import { CiLogout } from "react-icons/ci";
+import {
+  IoCalendarOutline,
+  IoCheckboxOutline,
+  IoListOutline,
+} from "react-icons/io5";
+
 import tailusLogo from "../../../public/tailus.svg";
 
 import SidebarItem from "./SidebarItem";
+
+const sidebarOptions = [
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    Icon: <IoCalendarOutline size={20} />,
+  },
+  {
+    name: "Rest TODOS",
+    href: "/dashboard/rest-todos",
+    Icon: <IoCheckboxOutline size={20} />,
+  },
+  {
+    name: "Server Actions",
+    href: "/dashboard/server-todos",
+    Icon: <IoListOutline size={20} />,
+  },
+];
 
 export default function Sidebar() {
   return (
@@ -30,8 +54,15 @@ export default function Sidebar() {
         </div>
 
         <ul className="space-y-2 tracking-wide mt-8">
-          <SidebarItem>Dashboard</SidebarItem>
-          <SidebarItem href="/dashboard/rest-todos">Categories</SidebarItem>
+          {sidebarOptions.map((option) => (
+            <SidebarItem
+              key={option.name}
+              href={option.href}
+              icon={option.Icon}
+            >
+              {option.name}
+            </SidebarItem>
+          ))}
         </ul>
       </div>
 
