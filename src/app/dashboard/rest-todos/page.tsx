@@ -1,5 +1,12 @@
-export default function RestTodosPage() {
+import TodosGrid from "@/components/Todos/TodosGrid";
+import { getTodos } from "@/lib/db";
+
+export default async function RestTodosPage() {
+  const todos = await getTodos();
+
   return (
-    <div>RestTodosPage</div>
+    <div>
+      <TodosGrid todos={todos} />
+    </div>
   );
 }

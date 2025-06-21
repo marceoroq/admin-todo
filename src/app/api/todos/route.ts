@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z as zod } from "zod";
 
 import prisma from "@/lib/prisma";
+import { getTodos } from "@/lib/db";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -10,11 +11,11 @@ export async function GET(request: NextRequest) {
 
   try {
     // get all todos from db
-    const todos = await prisma.todo.findMany({ take, skip });
+    const todos = await getTodos({ take, skip });
     return NextResponse.json({ success: true, data: todos });
   } catch (error) {
-    console.error("Error creating todo item:", error);
-    return NextResponse.json({ success: false, message: "Failed to create todo item" }, { status: 500 });
+    console.error("Error getting todo items:", error);
+    return NextResponse.json({ success: false, message: "Failed to get todo items" }, { status: 500 });
   }
 }
 
