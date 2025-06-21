@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z as zod } from "zod";
 
-import prisma from "@/lib/prisma";
-import { getTodos } from "@/lib/db";
+import { createTodo, getTodos } from "@/db/todos";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -31,7 +30,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const validatedData = postSchema.parse(body);
-    const savedTodo = await prisma.todo.create({ data: validatedData });
+    const savedTodo = await createTodo(validatedData);
     return NextResponse.json({ success: true, data: savedTodo });
   } catch (error) {
     if (error instanceof zod.ZodError) {

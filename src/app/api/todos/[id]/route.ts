@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
 import { z as zod } from "zod";
+import { NextResponse } from "next/server";
 
-import prisma from "@/lib/prisma";
+import { getTodoById, updateTodo } from "@/db/todos";
 
 interface Params {
   params: Promise<{ id: string }>;
@@ -9,7 +9,7 @@ interface Params {
 
 export async function GET(request: Request, { params }: Params) {
   const id = (await params).id;
-  const todo = await prisma.todo.findUnique({ where: { id } });
+  const todo = await getTodoById(id);
 
   if (!todo) return NextResponse.json({ error: "Todo not found." }, { status: 404 });
 
@@ -18,7 +18,7 @@ export async function GET(request: Request, { params }: Params) {
 
 export async function PUT(request: Request, { params }: Params) {
   const id = (await params).id;
-  const todo = await prisma.todo.findUnique({ where: { id } });
+  const todo = await getTodoById(id);
 
   if (!todo) return NextResponse.json({ error: "Todo not found." }, { status: 404 });
 
@@ -35,7 +35,7 @@ export async function PUT(request: Request, { params }: Params) {
   try {
     const body = await request.json();
     const validatedData = putSchema.parse(body);
-    const updatedTodo = await prisma.todo.update({ where: { id }, data: { ...validatedData } });
+    const updatedTodo = await updateTodo(id, validatedData);
 
     return NextResponse.json(updatedTodo);
   } catch (error) {
