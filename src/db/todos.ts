@@ -31,6 +31,6 @@ export async function updateTodo(id: string, data: { description?: string, compl
   });
 }
 
-export async function deleteManyTodos(): Promise<Prisma.BatchPayload> {
-  return await prisma.todo.deleteMany();
+export async function deleteManyTodos(options = {}): Promise<Prisma.BatchPayload> {
+  return await prisma.todo.deleteMany(options);
 }

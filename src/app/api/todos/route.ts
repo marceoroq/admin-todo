@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z as zod } from "zod";
 
-import { createTodo, getTodos } from "@/db/todos";
+import { createTodo, deleteManyTodos, getTodos } from "@/db/todos";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -9,8 +9,7 @@ export async function GET(request: NextRequest) {
   const skip = Number(searchParams.get("offset")) || 0;
 
   try {
-    // get all todos from db
-    const todos = await getTodos({ take, skip });
+    const todos = await getTodos({ take, skip, orderBy: { completed: 'asc' } });
     return NextResponse.json({ success: true, data: todos });
   } catch (error) {
     console.error("Error getting todo items:", error);
@@ -37,5 +36,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: "Invalid format", errors: error.errors }, { status: 400 });
     }
     return NextResponse.json({ success: false, message: "Error creating todo in DB" }, { status: 500 });
+  }
+}
+
+export async function DELETE() {
+  try {
+    await deleteManyTodos({where: { completed: true }});
+    return NextResponse.json({ success: true, message: "Completed todos deleted successfully" });
+  } catch (error) {
+    return NextResponse.json({ success: false, message: "Error deleting todos in DB", error }, { status: 500 });
   }
 }
