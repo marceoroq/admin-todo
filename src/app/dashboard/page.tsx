@@ -1,4 +1,11 @@
+import { Metadata } from "next";
+
 import Widget from "@/components/Widget";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Dashboard Page",
+};
 
 export default function DashboardPage() {
   return (
