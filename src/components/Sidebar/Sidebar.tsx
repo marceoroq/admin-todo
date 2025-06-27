@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+
 import { CiLogout } from "react-icons/ci";
+import { PiCookie } from "react-icons/pi";
 import {
   IoCalendarOutline,
   IoCheckboxOutline,
@@ -26,6 +28,11 @@ const sidebarOptions = [
     name: "Server Actions",
     href: "/dashboard/server-todos",
     Icon: <IoListOutline size={20} />,
+  },
+  {
+    name: "Cookies",
+    href: "/dashboard/cookies",
+    Icon: <PiCookie size={23} />,
   },
 ];
 
