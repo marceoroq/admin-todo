@@ -1,5 +1,6 @@
 import TabBar from "@/components/TabBar";
 import { Metadata } from "next";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Cookies",
@@ -42,10 +43,15 @@ const tabsData = [
   },
 ];
 
-export default function Cookies() {
+export default async function CookiesPage() {
+  const cookiesStore = await cookies();
+  const activeTab = cookiesStore.get("activeTab")?.value;
+
+  const initialActiveTab = activeTab || tabsData[0].value;
+
   return (
     <div>
-      <TabBar tabs={tabsData} />
+      <TabBar tabs={tabsData} activeTab={initialActiveTab} />
     </div>
   );
 }

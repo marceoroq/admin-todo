@@ -1,14 +1,21 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { setCookie } from "cookies-next";
 import { useState } from "react";
 
 interface TabBarProps {
   tabs: { label: string; value: string; desc: string }[];
+  activeTab: string;
 }
 
-export default function TabBar({ tabs }: TabBarProps) {
-  const [activeTab, setActiveTab] = useState("html");
+export default function TabBar({ tabs, activeTab: initialTab }: TabBarProps) {
+  const [activeTab, setActiveTab] = useState<string>(initialTab);
+
+  const handleTabClick = (value: string) => {
+    setActiveTab(value);
+    setCookie("activeTab", value);
+  };
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -22,7 +29,7 @@ export default function TabBar({ tabs }: TabBarProps) {
                 ? "text-blue-600 bg-white shadow"
                 : "text-gray-500 hover:text-gray-700 hover:bg-gray-200"
             )}
-            onClick={() => setActiveTab(tab.value)}
+            onClick={() => handleTabClick(tab.value)}
           >
             {tab.label}
           </button>

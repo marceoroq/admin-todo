@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { CiLogout } from "react-icons/ci";
 import { PiCookie } from "react-icons/pi";
+import { HiOutlineShoppingBag } from "react-icons/hi2";
 import {
   IoCalendarOutline,
   IoCheckboxOutline,
@@ -33,6 +34,11 @@ const sidebarOptions = [
     name: "Cookies",
     href: "/dashboard/cookies",
     Icon: <PiCookie size={23} />,
+  },
+  {
+    name: "Products",
+    href: "/dashboard/products",
+    Icon: <HiOutlineShoppingBag size={23} />,
   },
 ];
 
